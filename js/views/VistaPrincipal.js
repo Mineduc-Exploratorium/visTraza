@@ -5,10 +5,9 @@ define([
 	'jquery',
 	'd3',
 	'VistaLoading',
-	'VistaToolTip',
 	'views/Visualizador',
 
-	], function(_, Backbone,$, d3, VistaLoading, VistaToolTip, Visualizador){
+	], function(_, Backbone,$, d3, VistaLoading, Visualizador){
 
 
 	var VistaPrincipal = Backbone.View.extend(

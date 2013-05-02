@@ -11,7 +11,7 @@ require.config({
     d3: 'libs/d3/d3.AMD',
     sankey: 'libs/d3/d3.sankey.AMD',
     bootstrap: 'libs/bootstrap/js/bootstrap.min',
-    VistaToolTip: 'libs/tideD3/VistaToolTip',
+    VistaTooltip: 'libs/tideD3/VistaTooltip',
     VistaEjesXY: 'libs/tideD3/VistaEjesXY',
     VistaLoading: 'libs/tideD3/VistaLoading',
     templates: '../templates'
