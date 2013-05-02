@@ -1,12 +1,13 @@
+// traza
 define([
 	'underscore',
 	'backbone',
 	'jquery',
 	'd3',
-	'd3.sankey'
+	'sankey',
 	'VistaToolTip',
 	'VistaEjesXY'
-	], function(_, Backbone,$, d3,d3.sankey, VistaToolTip, VistaEjesXY){
+	], function(_, Backbone,$, d3,d3sankey, VistaToolTip, VistaEjesXY){
 
 	var Visualizador = Backbone.View.extend(
 		/** @lends Visualizador.prototype */
@@ -25,7 +26,6 @@ define([
 		* Visualizador Inicia parametros de configuración y llamada a datos
 		*/
 		initialize: function() {
-			this.svg = this.options && this.options.svg ? this.options.svg : document.createElementNS('http://www.w3.org/2000/svg', "g");
 			this.data = this.options && this.options.data ? this.options.data : [];
 
 			// Binding de this (esta vista) al contexto de las funciones indicadas
@@ -74,13 +74,13 @@ define([
 
 			var msg = "";
 			// Chequar si es un link (contiene source & target)
-			if (data.source) {
-				msg += "<span class='text-info'>"+data.source.name+" -> "+data.target.name+"</span>";
-				msg += "<br>"+formatNumber(data.value)+" estudiantes.";
+			if (d.source) {
+				msg += "<span class='text-info'>"+d.source.name+" -> "+d.target.name+"</span>";
+				msg += "<br>"+formatNumber(d.value)+" estudiantes.";
 
 			} else {
-				msg += "<span class='text-info'>"+data.name+"</span>";
-				msg += "<br>"+formatNumber(data.value)+" estudiantes.";
+				msg += "<span class='text-info'>"+d.name+"</span>";
+				msg += "<br>"+formatNumber(d.value)+" estudiantes.";
 			}
 
 			return msg;
@@ -121,7 +121,7 @@ define([
 			    color = d3.scale.category20();
 
 			// append the svg canvas to the page
-			this.svg
+			this.svg = d3.select(this.el)
 			    .attr("width", this.width + this.margin.left + this.margin.right)
 			    .attr("height", this.height + this.margin.top + this.margin.bottom)
 			  .append("g")
@@ -154,7 +154,7 @@ define([
 			  .layout(32);
 
 			// add in the links
-			var link = svg.append("g").selectAll(".link")
+			var link = this.svg.append("g").selectAll(".link")
 			  .data(this.flowData.links)
 			.enter().append("path")
 			  .attr("class", "link")
@@ -170,7 +170,7 @@ define([
 
 
 			// add in the nodes
-			var node = svg.append("g").selectAll(".node")
+			var node = this.svg.append("g").selectAll(".node")
 			  .data(this.flowData.nodes)
 			.enter().append("g")
 			  .attr("class", "node")

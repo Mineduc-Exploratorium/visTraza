@@ -9,10 +9,11 @@ require.config({
     json2: 'libs/json2/json2',
     text: 'libs/require/text',
     d3: 'libs/d3/d3.AMD',
-    d3.sankey: 'libs/d3/d3.sankey.AMD',
+    sankey: 'libs/d3/d3.sankey.AMD',
     bootstrap: 'libs/bootstrap/js/bootstrap.min',
     VistaToolTip: 'libs/tideD3/VistaToolTip',
     VistaEjesXY: 'libs/tideD3/VistaEjesXY',
+    VistaLoading: 'libs/tideD3/VistaLoading',
     templates: '../templates'
     
   },

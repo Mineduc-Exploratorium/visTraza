@@ -1,9 +1,10 @@
+// traza
 define([
 	'underscore',
 	'backbone',
 	'jquery',
 	'd3',
-	'views/VistaLoading',
+	'VistaLoading',
 	'VistaToolTip',
 	'views/Visualizador',
 
@@ -29,10 +30,14 @@ define([
 	    	// Auxiliar para referirse a this al interior de callback functions
 	    	var self = this
 
+	    	var datafile = "data/flujo_links.txt";
+
+	    	this.visIsSVG = true // SVG or HTML - Para crear elemento contenedor de la visualización principal
+
 			// Carga de datos
 	    	this.vistaLoading = new VistaLoading({el:this.el});
 			this.vistaLoading.show();
-			d3.tsv("data/flujo_links.txt", function(data) {
+			d3.tsv(datafile, function(data) {
 				self.vistaLoading.hide();
 
 				self.data = data;
@@ -44,13 +49,21 @@ define([
 		* Despliegue inicial de elementos gráficos.
 		*/
 		render : function() {
+			// Selector (d3) al elemento del DOM que contiene la visualización principal
+			var visContainer;
+			if (this.visIsSVG) {
+				// SVG - contenedor principal de elementos visuales es objeto SVG
+				visContainer = d3.select(this.el).append("svg");
+			} else {
+				// HTML - contenedor principales es elemento DIV (HTML)
+				visContainer = d3.select(this.el).append("div");
+			}
 
-			// SVG - contenedor principal de elementos visuales
-			this.svg = d3.select(this.el).append("svg")
+			visContainerElement = visContainer[0][0]  // <div> o <svg>
 
 			// Genera nueva vista que  despliega visualización
 			this.visualizador = new Visualizador({
-				svg: this.svg,
+				el: visContainerElement,
 				data: this.data,
 			});
 
